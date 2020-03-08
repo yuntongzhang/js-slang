@@ -103,12 +103,12 @@ export function transformWhileToKernelOp(program: es.Program) {
 }
 
 function generateKernelCode(arrayName: string, functionApplied: string) {
-  // underscore in nameto avoid clashing
+  // underscore in name to avoid clashing
   const code = `const _gpu = new GPU();
                 const _kernel = _gpu.createKernel(function (x) {
                   return ${functionApplied}(x[this.thread.x]);
                 }).setOutput([array_length(${arrayName})]);
-                ${arrayName} = kernel(${arrayName});`
+                ${arrayName} = _kernel(${arrayName});`
   return code
 }
 
