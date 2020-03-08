@@ -6,6 +6,7 @@ import { GLOBAL, GLOBAL_KEY_TO_ACCESS_NATIVE_STORAGE } from '../constants'
 import { AllowedDeclarations, Value } from '../types'
 import * as create from '../utils/astCreator'
 import { ConstAssignment, UndefinedVariable } from '../errors/errors'
+import { transformWhileToKernelOp } from './gpuTranspile'
 
 /**
  * This whole transpiler includes many many many many hacks to get stuff working.
@@ -641,6 +642,8 @@ export function transpile(program: es.Program, id: number, skipUndefinedVariable
   if (program.body.length === 0) {
     return { transpiled: '' }
   }
+
+  transformWhileToKernelOp(program)
   const functionsToStringMap = generateFunctionsToStringMap(program)
   transformReturnStatementsToAllowProperTailCalls(program)
   transformCallExpressionsToCheckIfFunction(program)
@@ -648,10 +651,12 @@ export function transpile(program: es.Program, id: number, skipUndefinedVariable
   transformSomeExpressionsToCheckIfBoolean(program)
   transformPropertyAssignment(program)
   transformPropertyAccess(program)
-  checkForUndefinedVariablesAndTransformAssignmentsToPropagateBackNewValue(
-    program,
-    skipUndefinedVariableErrors
-  )
+  // TODO: disabled for now coz it was complaining about the name GPU
+  // should be due to the import issue
+  // checkForUndefinedVariablesAndTransformAssignmentsToPropagateBackNewValue(
+  //   program,
+  //   skipUndefinedVariableErrors
+  // )
   transformFunctionDeclarationsToArrowFunctions(program, functionsToStringMap)
   wrapArrowFunctionsToAllowNormalCallsAndNiceToString(program, functionsToStringMap)
   addInfiniteLoopProtection(program)
