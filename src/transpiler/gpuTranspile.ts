@@ -60,7 +60,10 @@ export function transformWhileToKernelOp(program: es.Program) {
           continue
         }
         const assignedExpr = (expr as es.AssignmentExpression).left
-        if (assignedExpr.type === 'Identifier' && (assignedExpr as es.Identifier).name === loopControlVar) {
+        if (
+          assignedExpr.type === 'Identifier' &&
+          (assignedExpr as es.Identifier).name === loopControlVar
+        ) {
           // found assignment to LCV
           // TODO: check for increment by 1 on LCV
           loopControlVarPresent = true
@@ -87,8 +90,10 @@ export function transformWhileToKernelOp(program: es.Program) {
       }
       // TODO: more checks can be added, such as typing of various expressions (need type inference)
       // generate AST of corresponding GPU.js code
-      const newNode: es.BlockStatement =
-        (acornParse(generateKernelCode(arrayName, functionApplied), gpuParseOptions) as unknown as es.BlockStatement)
+      const newNode: es.BlockStatement = (acornParse(
+        generateKernelCode(arrayName, functionApplied),
+        gpuParseOptions
+      ) as unknown) as es.BlockStatement
       // adjust fields of the original node
       node.type = 'BlockStatement'
       node = node as es.BlockStatement
