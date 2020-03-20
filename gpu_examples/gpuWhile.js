@@ -3,10 +3,9 @@
  */
 let input = [1,2,3,4,5];
 let i = 0;
-const f = x => x + 1;
 
 while (i < array_length(input)) {
-  input[i] = f(input[i]);
+  input[i] = (x => x + 1)(input[i]);
   i = i+1;
 }
 
@@ -25,8 +24,7 @@ while (i < array_length(input)) {
 // const gpu = new GPU();
 
 // let input = [1,2,3,4,5];
-// const f = x => x + 1;
 // const kernel = gpu.createKernel(function (x) {
-//   return f(x[this.thread.x]);
+//   return (x => x + 1)(x[this.thread.x]);
 // }).setOutput([array_length(input)]);
 // input = kernel(input);

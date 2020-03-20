@@ -36,7 +36,27 @@
 &&                       && |   &\quad &&  \textit{block} 
                                                            && \textrm{\href{https://sicp.comp.nus.edu.sg/chapters/10}{block statement}}\\
 &&                       && |   &\quad &&  \textit{expression} \ \textbf{\texttt{;}}
-                                                           && \textrm{\href{https://sicp.comp.nus.edu.sg/chapters/3}{expression statement}} \\[1mm]
+                                                           && \textrm{\href{https://sicp.comp.nus.edu.sg/chapters/3}{expression statement}} \\
+&&                       && |   &\quad && \textit{GPU-statement}
+														   && \textrm{GPU statement} \\[1mm]
+&& \textit{GPU-statement}  && ::= &\quad && \textit{GPU-header} \quad \textit{GPU-body}
+														   && \textrm{GPU statement} \\[1mm]
+&& \textit{GPU-header}  && ::= &\quad && \textbf{\texttt{let input = [}}\ \textit{expressions}\ \textbf{\texttt{];}}
+														   && \textrm{array variable}\\
+&&   				     &&     &      && \textbf{\texttt{let i = 0;}}
+														   && \textrm{loop control variable} \\[1mm] 
+&& \textit{GPU-body}    && ::= &\quad && \textbf{\texttt{while}} \ \textbf{\texttt{( i<array\_length(input) )}}
+														   && \textrm{while condition} \\
+&&                       &&     &      && \textit{GPU-block} 
+														   && \textrm{GPU block} \\[1mm]
+&& \textit{GPU-block}    && ::= &\quad && \textbf{\texttt{\{ }} \\
+&&                       &&     &\quad &&  \textbf{\texttt{input[i]}}  \ \textbf{\texttt{=}} \ \textbf{\texttt{(}} \ 
+													    \textit{function-definition}\
+													    \textbf{\texttt{)(input[i]);}}
+													       && \textrm{array element operation}\\
+&&                       &&     &\quad &&  \textbf{\texttt{i}}  \ \textbf{\texttt{=}} \ \textbf{\texttt{i + 1;}}
+														   && \textrm{counter incrementation}\\			
+&&                       &&     &\quad &&  \textbf{\texttt{\} }} \\[1mm]								     
 && \textit{parameters}   && ::= &\quad &&  \epsilon\ | \  \textit{name} \ 
                                                    (\ \textbf{\texttt{,}} \ \textit{name}\ )\ \ldots
                                                             && \textrm{\href{https://sicp.comp.nus.edu.sg/chapters/6}{function parameters}} \\[1mm]
@@ -55,7 +75,10 @@
                                                             && \textrm{\href{https://sicp.comp.nus.edu.sg/chapters/49}{variable declaration}} \\[1mm]
 && \textit{assignment}   && ::= &\quad &&  \textit{name} \ 
                                            \textbf{\texttt{=}}\  \textit{expression} 
-                                                            && \textrm{\href{https://sicp.comp.nus.edu.sg/chapters/49}{variable assignment}} \\[1mm]
+                                                            && \textrm{\href{https://sicp.comp.nus.edu.sg/chapters/49}{variable assignment}}
+\end{alignat*}
+
+\begin{alignat*}{9}
 && \textit{expression}   && ::= &\quad &&  \textit{number}   && \textrm{\href{https://sicp.comp.nus.edu.sg/chapters/3}{primitive number expression}}\\
 &&                       && |   &\quad && \textbf{\texttt{true}}\ |\ \textbf{\texttt{false}}
                                                            && \textrm{\href{https://sicp.comp.nus.edu.sg/chapters/8}{primitive boolean expression}}\\
@@ -73,16 +96,8 @@
                                             \textbf{\texttt{(}}\ \textit{expressions}\
                                             \textbf{\texttt{)}}
                                                            && \textrm{\href{https://sicp.comp.nus.edu.sg/chapters/6}{function application}} \\
-&&                       && |   &\quad &&   (\ \textit{name}\ | \
-                                               \textbf{\texttt{(}}\ \textit{parameters}\ \textbf{\texttt{)}}\
-                                            )\    
-                                            \texttt{\textbf{=>}}\ \textit{expression}
-                                                           && \textrm{\href{https://sicp.comp.nus.edu.sg/chapters/20}{function definition (expr. body)}} \\
-&&                       && |   &\quad &&   (\ \textit{name}\ | \
-                                               \textbf{\texttt{(}}\ \textit{parameters}\ \textbf{\texttt{)}}\
-                                            )\    
-                                            \texttt{\textbf{=>}}\ \textit{block}
-                                                           && \textrm{\href{https://sicp.comp.nus.edu.sg/chapters/33\#footnote-link-7}{function definition (block body)}} \\
+&&                       && |   &\quad &&   \textit{function-definition}
+														   && \textrm{function definition}\\                                              
 &&                       && |   &\quad &&   \textit{expression} \ \textbf{\texttt{?}}\ 
                                             \textit{expression}
                                             \ \textbf{\texttt{:}}\
@@ -96,7 +111,17 @@
                                             \textbf{\texttt{]}}
                                                            && \textrm{literal array expression}\\
 &&                       && |   &\quad &&  \textbf{\texttt{(}}\  \textit{expression} \ 
-                                            \textbf{\texttt{)}} && \textrm{\href{https://sicp.comp.nus.edu.sg/chapters/3}{parenthesised expression}}\\[1mm]
+                                            \textbf{\texttt{)}} && \textrm{\href{https://sicp.comp.nus.edu.sg/chapters/3}{parenthesised expression}}\\[1mm]                             
+&& \textit{function-definition}  && ::=  &\quad &&   (\ \textit{name}\ | \
+											\textbf{\texttt{(}}\ \textit{parameters}\ \textbf{\texttt{)}}\
+											)\    
+											\texttt{\textbf{=>}}\ \textit{expression}
+														  && \textrm{\href{https://sicp.comp.nus.edu.sg/chapters/20}{function definition (expr. body)}} \\
+&&                       && |   &\quad &&   (\ \textit{name}\ | \
+											\textbf{\texttt{(}}\ \textit{parameters}\ \textbf{\texttt{)}}\
+											)\    
+											\texttt{\textbf{=>}}\ \textit{block}
+														  && \textrm{\href{https://sicp.comp.nus.edu.sg/chapters/33\#footnote-link-7}{function definition (block body)}} \\
 && \textit{binary-operator}    \ 
                         && ::= &\quad && \textbf{\texttt{+}}\ |\ \textbf{\texttt{-}}\ |\ \textbf{\texttt{*}}\ |\ \textbf{\texttt{/}}\ |\ \textbf{\texttt{\%}}\ |\ 
                                    \textbf{\texttt{===}}\ |\ \textbf{\texttt{!==}}\ \\
